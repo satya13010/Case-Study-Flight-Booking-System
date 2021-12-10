@@ -1,0 +1,24 @@
+host.environment.port: 8999
+env.port: ${host.environment.port}
+server.port:${env.port}
+
+
+eureka:
+  instance:
+    hostname:localhost
+
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: search-and-booking-service
+          uri: lb://localhost
+          predicates:
+            - Path=/api/**
+        - id: BOOKINGANDPAYMENTSERVICE
+          uri: lb://localhost
+          predicates:
+            - path=/BookingAndPayment/**
